@@ -1,0 +1,89 @@
+---
+title: "Harita Uygulaması"
+author: "Yiğit Durmaz"
+date: "21.11.2024"
+output:
+  html_document:
+    theme: readable
+    code_folding: hide
+---
+
+```{r reading_data, warning=FALSE, echo=FALSE}
+library(leaflet)
+library(htmlwidgets)
+```
+
+## Yaşadığım Yerler
+```{r}
+locations <- data.frame(
+  name = c("Bursa", "Tokat", "Şanlıurfa", "Ankara", "Sosnowiec", "Denton"),
+  lat = c(40.257639, 40.352009, 37.171990, 39.934947, 50.296645, 33.209899),
+  lng = c(28.935329, 36.541149, 38.798858, 32.857177, 19.132783, -97.094279)
+)
+
+route <- data.frame(
+  lat = c(33.209899, 39.934947, 37.171990, 40.352009, 40.257639, 50.296645),
+  lng = c(-97.094279, 32.857177, 38.798858, 36.541149, 28.935329, 19.132783)
+)
+
+map <- leaflet() %>%
+  addTiles() %>%
+  addMarkers(data = locations, 
+             ~lng, ~lat, 
+             popup = ~name) %>%
+  addPolylines(data = route, 
+               ~lng, ~lat, 
+               color = "blue", 
+               weight = 3, 
+               opacity = 0.5)
+
+map
+```
+
+## Gezdiğim Şehirler
+```{r}
+locations2 <- data.frame(
+  name = c("Katowice", "Krakow", "Wroclaw", "Czestochowa", "Viyana", "Varşova"),
+  lat = c(50.259604, 50.061837, 51.110308, 50.812082, 48.208425, 52.229648),
+  lng = c(19.018165, 19.937362, 17.030836, 19.113194, 16.372113, 21.007466)
+)
+
+route2 <- data.frame(
+  lat = c(50.259604, 50.061837, 51.110308, 50.812082, 48.208425, 52.229648),
+  lng = c(19.018165, 19.937362, 17.030836, 19.113194, 16.372113, 21.007466)
+)
+
+map <- leaflet() %>%
+  addTiles() %>%
+  addMarkers(data = locations2, 
+             ~lng, ~lat, 
+             popup = ~name) %>%
+  addPolylines(data = route2, 
+               ~lng, ~lat, 
+               color = "red", 
+               weight = 3, 
+               opacity = 0.5)
+
+map
+```
+
+## Konum Gösteren Harita
+Koordinatları öğrenmek için haritaya tıkla.
+```{r}
+map <- leaflet() %>%
+  addTiles() %>%
+  setView(lng = 28.979530, lat = 41.015137, zoom = 6) %>%
+  onRender("
+    function(el, x) {
+      this.on('click', function(e) {
+        var lat = e.latlng.lat;
+        var lng = e.latlng.lng;
+        alert('Koordinatlar: ' + lat + ', ' + lng);
+        console.log('Koordinatlar: ', lat, lng);
+      });
+    }
+  ")
+
+map
+```
+
