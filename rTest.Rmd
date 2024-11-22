@@ -16,7 +16,7 @@ library(htmlwidgets)
 ## Yaşadığım Yerler
 ```{r}
 locations <- data.frame(
-  name = c("Bursa", "Tokat", "Şanlıurfa", "Ankara", "Sosnowiec", "Denton"),
+  name = c("B", "Tokat", "Şanlıurfa", "Ankara", "Sosnowiec", "Denton"),
   lat = c(40.257639, 40.352009, 37.171990, 39.934947, 50.296645, 33.209899),
   lng = c(28.935329, 36.541149, 38.798858, 32.857177, 19.132783, -97.094279)
 )
